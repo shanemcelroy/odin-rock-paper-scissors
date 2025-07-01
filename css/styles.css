@@ -39,7 +39,8 @@ body {
 
 .rock,
 .paper,
-.scissors {
+.scissors,
+.reset {
   padding: 10px 60px;
   background-color: lightcoral;
   border-radius: 10px;

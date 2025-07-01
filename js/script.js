@@ -5,16 +5,21 @@ const computerScoreText = document.querySelector(".computer-score");
 
 const msgDiv = document.createElement("div");
 const message = document.createElement("p");
+const reset = document.createElement("button");
 
 let humanScore = 0;
 let computerScore = 0;
 let gameOver = false;
 
 choices.addEventListener("click", (e) => {
-  const humanChoice = e.target.textContent.toLowerCase();
-  if (!gameOver) {
-    playRound(humanChoice, computerChoice());
-    isGameOver();
+  if (e.target.matches(".reset")) {
+    resetGame();
+  } else {
+    const humanChoice = e.target.textContent.toLowerCase();
+    if (!gameOver) {
+      playRound(humanChoice, computerChoice());
+      isGameOver();
+    }
   }
 });
 
@@ -60,6 +65,11 @@ function isGameOver() {
 
   if (gameOver) {
     displayGameOverMessage(message, humanScore, computerScore);
+
+    reset.textContent = "RESET";
+    reset.setAttribute("style", "background-color: lightskyblue;");
+    reset.setAttribute("class", "reset");
+    choices.appendChild(reset);
   }
   return;
 }
@@ -83,4 +93,18 @@ function displayGameOverMessage(msg, humanScore, computerScore) {
 
   msg.textContent = `You ${outcome} with a score of ${humanScore} to ${computerScore}.`;
   displayRoundMessage(message);
+}
+
+function resetGame() {
+  gameOver = false;
+  humanScore = 0;
+  computerScore = 0;
+
+  humanScoreText.textContent = 0;
+  humanScoreText.setAttribute("style", "color: black");
+  computerScoreText.textContent = 0;
+  computerScoreText.setAttribute("style", "color: black");
+
+  msgDiv.remove();
+  reset.remove();
 }
