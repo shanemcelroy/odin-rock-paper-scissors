@@ -36,7 +36,6 @@ function playRound(humanChoice, computerChoice) {
     message.setAttribute("style", "text-align: center;");
     msgDiv.appendChild(message);
     content.insertBefore(msgDiv, choices);
-    return;
   } else if (
     (humanChoice === "rock" && computerChoice === "scissors") ||
     (humanChoice === "paper" && computerChoice === "rock") ||
@@ -55,7 +54,6 @@ function playRound(humanChoice, computerChoice) {
     content.insertBefore(msgDiv, choices);
     computerScore++;
     computerScoreText.textContent = computerScore;
-    return;
   }
 }
 
