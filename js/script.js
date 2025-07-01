@@ -1,4 +1,18 @@
-function getComputerChoice() {
+const choices = document.querySelector(".choices");
+const humanScoreText = document.querySelector(".human-score");
+const computerScoreText = document.querySelector(".computer-score");
+
+let humanScore = 0;
+let computerScore = 0;
+let roundCount = 0;
+
+choices.addEventListener("click", (e) => {
+  const humanChoice = e.target.textContent.toLowerCase();
+  // console.log(humanChoice, computerChoice());
+  playRound(humanChoice, computerChoice());
+});
+
+let computerChoice = function () {
   let randomNum = Math.floor(Math.random() * 3);
 
   if (randomNum === 0) {
@@ -8,60 +22,54 @@ function getComputerChoice() {
   } else {
     return "scissors";
   }
-}
+};
 
-function getHumanChoice() {
-  let choice = prompt("Rock, paper, or scissors?: ");
-  return choice.toLowerCase();
-}
-
-function playGame() {
-  let humanScore = 0;
-  let computerScore = 0;
-  const roundTotal = 5;
-
-  for (let i = 0; i < roundTotal; i++) {
-    playRound(getHumanChoice(), getComputerChoice());
+function playRound(humanChoice, computerChoice) {
+  // Checks for a tie
+  if (humanChoice === computerChoice) {
+    return console.log(`Tie! You both chose ${humanChoice}.`);
   }
 
-  console.log(declareWinner(humanScore, computerScore));
-
-  function playRound(humanChoice, computerChoice) {
-    // Checks for a tie
-    if (humanChoice === computerChoice) {
-      console.log(`Tie! You both chose ${humanChoice}.`);
-      return;
-    }
-
-    // Human rock functionality
-    if (humanChoice === "rock" && computerChoice === "scissors") {
-      console.log("You win! Rock beats Scissors!");
-      return humanScore++;
-    } else if (humanChoice === "rock" && computerChoice === "paper") {
-      console.log("You lose! Paper beats Rock!");
-      return computerScore++;
-    }
-
-    // Human paper functionality
-    if (humanChoice === "paper" && computerChoice === "rock") {
-      console.log("You win! Paper beats rock!");
-      return humanScore++;
-    } else if (humanChoice === "paper" && computerChoice === "scissors") {
-      console.log("You lose! Scissors beats Paper!");
-      return computerScore++;
-    }
-
-    // Human scissors functionality
-    if (humanChoice === "scissors" && computerChoice == "paper") {
-      console.log("You win! Scissors beats Paper!");
-      return humanScore++;
-    } else if (humanChoice === "scissors" && computerChoice === "rock") {
-      console.log("You lose! Rock beats Scissors!");
-      return computerScore++;
-    }
+  // Rock
+  if (humanChoice === "rock" && computerChoice === "scissors") {
+    console.log("You win! Rock beats Scissors!");
+    humanScore++;
+    humanScoreText.textContent = humanScore;
+    return;
+  } else if (humanChoice === "rock" && computerChoice === "paper") {
+    console.log("You lose! Paper beats Rock!");
+    computerScore++;
+    computerScoreText.textContent = computerScore;
+    return;
   }
 
-  function declareWinner(humanScore, computerScore) {
+  // Paper
+  if (humanChoice === "paper" && computerChoice === "rock") {
+    console.log("You win! Paper beats rock!");
+    humanScore++;
+    humanScoreText.textContent = humanScore;
+    return;
+  } else if (humanChoice === "paper" && computerChoice === "scissors") {
+    console.log("You lose! Scissors beats Paper!");
+    computerScore++;
+    computerScoreText.textContent = computerScore;
+    return;
+  }
+
+  // Scissors
+  if (humanChoice === "scissors" && computerChoice == "paper") {
+    console.log("You win! Scissors beats Paper!");
+    humanScore++;
+    humanScoreText.textContent = humanScore;
+    return;
+  } else if (humanChoice === "scissors" && computerChoice === "rock") {
+    console.log("You lose! Rock beats Scissors!");
+    computerScore++;
+    computerScoreText.textContent = computerScore;
+    return;
+  }
+
+  /*function declareWinner(humanScore, computerScore) {
     if (humanScore > computerScore) {
       return `You win with a score of ${humanScore} to ${computerScore}`;
     } else if (humanScore < computerScore) {
@@ -69,7 +77,5 @@ function playGame() {
     } else {
       return "You both tied!";
     }
-  }
+  }*/
 }
-
-playGame();
