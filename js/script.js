@@ -5,11 +5,15 @@ const computerScoreText = document.querySelector(".computer-score");
 let humanScore = 0;
 let computerScore = 0;
 let roundCount = 0;
+let gameOver = false;
 
 choices.addEventListener("click", (e) => {
   const humanChoice = e.target.textContent.toLowerCase();
   // console.log(humanChoice, computerChoice());
-  playRound(humanChoice, computerChoice());
+  if (!gameOver) {
+    playRound(humanChoice, computerChoice());
+    isGameOver();
+  }
 });
 
 let computerChoice = function () {
@@ -68,14 +72,23 @@ function playRound(humanChoice, computerChoice) {
     computerScoreText.textContent = computerScore;
     return;
   }
+}
 
-  /*function declareWinner(humanScore, computerScore) {
-    if (humanScore > computerScore) {
-      return `You win with a score of ${humanScore} to ${computerScore}`;
-    } else if (humanScore < computerScore) {
-      return `You lose with a score of ${humanScore} to ${computerScore}`;
-    } else {
-      return "You both tied!";
-    }
-  }*/
+function isGameOver() {
+  if (humanScore === 5) {
+    humanScoreText.setAttribute("style", "color: green");
+    computerScoreText.setAttribute("style", "color: red");
+    console.log(`You win with a score of ${humanScore} to ${computerScore}`);
+    gameOver = true;
+    return;
+  } else if (computerScore === 5) {
+    computerScoreText.setAttribute("style", "color: green");
+    humanScoreText.setAttribute("style", "color: red");
+    console.log(`You lose with a score of ${humanScore} to ${computerScore}`);
+    gameOver = true;
+    return;
+  } else {
+    gameOver = false;
+    return;
+  }
 }
