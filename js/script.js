@@ -21,63 +21,66 @@ choices.addEventListener("click", (e) => {
 let computerChoice = function () {
   let randomNum = Math.floor(Math.random() * 3);
 
-  if (randomNum === 0) {
-    return "rock";
-  } else if (randomNum === 1) {
-    return "paper";
-  } else {
-    return "scissors";
+  switch (randomNum) {
+    case 0:
+      return "rock";
+      break;
+    case 1:
+      return "paper";
+      break;
+    case 2:
+      return "scissors";
+      break;
   }
 };
 
 function playRound(humanChoice, computerChoice) {
   if (humanChoice === computerChoice) {
     message.textContent = `Tie! You both chose ${humanChoice}.`;
-    message.setAttribute("style", "text-align: center;");
-    msgDiv.appendChild(message);
-    content.insertBefore(msgDiv, choices);
+    displayRoundMessage(message);
   } else if (
     (humanChoice === "rock" && computerChoice === "scissors") ||
     (humanChoice === "paper" && computerChoice === "rock") ||
     (humanChoice === "scissors" && computerChoice == "paper")
   ) {
     message.textContent = `You win! ${humanChoice} beats ${computerChoice}!`;
-    message.setAttribute("style", "text-align: center;");
-    msgDiv.appendChild(message);
-    content.insertBefore(msgDiv, choices);
+    displayRoundMessage(message);
     humanScore++;
     humanScoreText.textContent = humanScore;
   } else {
     message.textContent = `You lose! ${computerChoice} beats ${humanChoice}!`;
-    message.setAttribute("style", "text-align: center;");
-    msgDiv.appendChild(message);
-    content.insertBefore(msgDiv, choices);
+    displayRoundMessage(message);
     computerScore++;
     computerScoreText.textContent = computerScore;
   }
 }
 
 function isGameOver() {
-  if (humanScore === 5) {
+  gameOver = humanScore === 5 || computerScore === 5 ? true : false;
+
+  if (gameOver) {
+    displayGameOverMessage(message, humanScore, computerScore);
+  }
+  return;
+}
+
+function displayRoundMessage(msg) {
+  msg.setAttribute("style", "text-align: center;");
+  msgDiv.appendChild(msg);
+  content.insertBefore(msgDiv, choices);
+}
+
+function displayGameOverMessage(msg, humanScore, computerScore) {
+  let outcome = humanScore > computerScore ? "win" : "lose";
+
+  if (outcome === "win") {
     humanScoreText.setAttribute("style", "color: green");
     computerScoreText.setAttribute("style", "color: red");
-    message.textContent = `You win with a score of ${humanScore} to ${computerScore}.`;
-    message.setAttribute("style", "text-align: center;");
-    msgDiv.appendChild(message);
-    content.insertBefore(msgDiv, choices);
-    gameOver = true;
-    return;
-  } else if (computerScore === 5) {
-    computerScoreText.setAttribute("style", "color: green");
-    humanScoreText.setAttribute("style", "color: red");
-    message.textContent = `You lose with a score of ${humanScore} to ${computerScore}.`;
-    message.setAttribute("style", "text-align: center;");
-    msgDiv.appendChild(message);
-    content.insertBefore(msgDiv, choices);
-    gameOver = true;
-    return;
   } else {
-    gameOver = false;
-    return;
+    humanScoreText.setAttribute("style", "color: red");
+    computerScoreText.setAttribute("style", "color: green");
   }
+
+  msg.textContent = `You ${outcome} with a score of ${humanScore} to ${computerScore}.`;
+  displayRoundMessage(message);
 }
