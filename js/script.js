@@ -74,11 +74,11 @@ function displayGameOverMessage(msg, humanScore, computerScore) {
   let outcome = humanScore > computerScore ? "win" : "lose";
 
   if (outcome === "win") {
-    humanScoreText.setAttribute("style", "color: green");
-    computerScoreText.setAttribute("style", "color: red");
+    humanScoreText.setAttribute("style", "color: palegreen");
+    computerScoreText.setAttribute("style", "color: palevioletred");
   } else {
-    humanScoreText.setAttribute("style", "color: red");
-    computerScoreText.setAttribute("style", "color: green");
+    humanScoreText.setAttribute("style", "color: palevioletred");
+    computerScoreText.setAttribute("style", "color: palegreen");
   }
 
   msg.textContent = `You ${outcome} with a score of ${humanScore} to ${computerScore}.`;
