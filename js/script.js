@@ -60,6 +60,7 @@ function playGame() {
       return computerScore++;
     }
   }
+
   function declareWinner(humanScore, computerScore) {
     if (humanScore > computerScore) {
       return `You win with a score of ${humanScore} to ${computerScore}`;
